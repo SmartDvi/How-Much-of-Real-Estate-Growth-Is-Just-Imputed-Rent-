@@ -1,0 +1,13 @@
+country,period,RE_total_growth_%,imputed_contribution_%_of_growth,excl_imputed_contribution_%_of_growth
+Czechia,1995-2007,202.4,63.0,37.0
+Czechia,2007-2015,50.4,69.0,31.0
+Czechia,2015-2019,45.8,74.4,25.6
+Czechia,2019-2024,49.7,73.8,26.2
+United States,1997-2007,80.0,62.7,37.3
+United States,2007-2015,27.4,46.1,53.9
+United States,2015-2019,19.7,52.6,47.4
+United States,2019-2024,43.8,58.5,41.5
+United Kingdom,1997-2007,39.5,73.1,26.9
+United Kingdom,2007-2015,30.0,36.0,64.0
+United Kingdom,2015-2019,14.7,78.7,21.3
+United Kingdom,2019-2023,31.6,85.5,14.5

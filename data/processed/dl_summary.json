@@ -1,0 +1,8 @@
+{
+  "dl_cv_mae_mean": 0.015579157881438732,
+  "naive_mae": 0.01408351119607687,
+  "xgb_cv_mae_mean": 0.01479532666689339,
+  "linear_cv_mae_mean": 0.014696624205154663,
+  "verdict": "no better than",
+  "n_rows": 367
+}

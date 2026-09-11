@@ -1,0 +1,4 @@
+comparison,n,pearson_r,p_value
+Imputed rent growth vs. official Rent Price Index growth,381,0.305,0.0
+Non-imputed RE growth vs. House Price Index growth,377,0.39,0.0
+Imputed share level vs. House-Price-to-Income ratio,400,-0.063,0.20634

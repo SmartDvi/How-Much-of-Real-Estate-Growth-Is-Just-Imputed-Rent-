@@ -1,0 +1,449 @@
+<title>Phantom Rent</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,500;0,7..72,600;0,7..72,700;1,7..72,400&display=swap">
+<style>
+  :root{
+    color-scheme: light;
+    --ink:            #161a1f;
+    --ink-secondary:  #4a5560;
+    --muted:          #7d8580;
+    --paper:          #eef1f0;
+    --surface:        #ffffff;
+    --surface-2:      #e6e9e5;
+    --border:         #d8d9d2;
+    --accent-real:    #146b5c;
+    --accent-real-fill: #146b5c1c;
+    --accent-phantom: #8f640f;
+    --accent-phantom-fill: #b8862c26;
+    --shadow: 0 1px 2px rgba(22,26,31,0.06), 0 8px 24px rgba(22,26,31,0.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --ink:            #eef1f0;
+      --ink-secondary:  #b7bfba;
+      --muted:          #838f89;
+      --paper:          #10161a;
+      --surface:        #1a2225;
+      --surface-2:      #212b2e;
+      --border:         #2c3639;
+      --accent-real:    #3fb49c;
+      --accent-real-fill: #3fb49c26;
+      --accent-phantom: #d9a94a;
+      --accent-phantom-fill: #d9a94a26;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --ink:            #eef1f0;
+    --ink-secondary:  #b7bfba;
+    --muted:          #838f89;
+    --paper:          #10161a;
+    --surface:        #1a2225;
+    --surface-2:      #212b2e;
+    --border:         #2c3639;
+    --accent-real:    #3fb49c;
+    --accent-real-fill: #3fb49c26;
+    --accent-phantom: #d9a94a;
+    --accent-phantom-fill: #d9a94a26;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Literata","Georgia",serif;
+    font-size:17px;
+    line-height:1.6;
+    padding-inline:20px;
+  }
+  .wrap{ max-width:760px; margin:0 auto; }
+  h1,h2,h3,.display{
+    font-family:"Big Shoulders Display","Arial Narrow",sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    text-wrap:balance;
+    font-weight:800;
+    color:var(--ink);
+    margin:0;
+  }
+  p{ margin:0 0 1em 0; max-width:64ch; }
+  a{ color:var(--accent-real); }
+  .eyebrow{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:700;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--accent-phantom);
+  }
+  .lede{ font-size:1.2em; color:var(--ink-secondary); max-width:56ch; }
+
+  /* ---------- layout rhythm ---------- */
+  header.hero{ padding-block:56px 32px; display:flex; flex-direction:column; gap:14px; }
+  section{ padding-block:40px; border-top:1px solid var(--border); }
+  section:first-of-type{ border-top:none; }
+  .section-title{ font-size:clamp(26px,5vw,36px); margin-bottom:14px; }
+
+  /* ---------- hero stat ---------- */
+  .hero-stat{
+    display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+    margin-block:8px 4px;
+  }
+  .hero-stat .num{
+    font-family:"Big Shoulders Display",sans-serif;
+    font-weight:900;
+    font-size:clamp(64px,18vw,120px);
+    line-height:0.85;
+    color:var(--accent-phantom);
+  }
+  .hero-stat .cap{ max-width:26ch; color:var(--ink-secondary); font-size:0.95em; }
+
+  /* ---------- waffle chart ---------- */
+  .waffle-block{ display:flex; gap:28px; flex-wrap:wrap; align-items:center; }
+  .waffle-grid{
+    display:grid; grid-template-columns:repeat(10,1fr); gap:3px;
+    width:min(260px,100%); aspect-ratio:1; flex:0 0 auto;
+  }
+  .waffle-grid i{ display:block; border-radius:2px; aspect-ratio:1; }
+  .waffle-grid i.phantom{ background:var(--accent-phantom); }
+  .waffle-grid i.real{ background:var(--accent-real); }
+  .waffle-legend{ display:flex; flex-direction:column; gap:10px; min-width:200px; }
+  .legend-row{ display:flex; align-items:center; gap:10px; }
+  .swatch{ width:14px; height:14px; border-radius:3px; flex:0 0 auto; }
+  .legend-row b{ font-size:1.15em; }
+  .legend-row .lbl{ color:var(--ink-secondary); font-size:0.92em; }
+
+  /* ---------- audience cards ---------- */
+  .card-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
+  @media (max-width:520px){ .card-grid{ grid-template-columns:1fr; } }
+  .aud-card{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:18px 18px 20px; box-shadow:var(--shadow);
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .aud-card .tag{
+    font-family:"Big Shoulders Display",sans-serif; font-weight:700; letter-spacing:0.05em;
+    text-transform:uppercase; font-size:14px; color:var(--accent-real);
+  }
+  .aud-card p{ margin:0; font-size:0.95em; color:var(--ink-secondary); max-width:none; }
+
+  /* ---------- pull quote / finding callouts ---------- */
+  .finding{ margin-block:28px; }
+  .finding h3{ font-size:22px; margin-bottom:8px; text-transform:none; }
+  .finding .stat-row{ display:flex; gap:22px; flex-wrap:wrap; margin-block:12px; }
+  .mini-stat{ display:flex; flex-direction:column; }
+  .mini-stat .v{ font-family:"Big Shoulders Display",sans-serif; font-weight:800; font-size:28px; line-height:1; }
+  .mini-stat .l{ font-size:12.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; margin-top:4px; }
+  .v.real{ color:var(--accent-real); } .v.phantom{ color:var(--accent-phantom); }
+
+  .pullquote{
+    border-left:3px solid var(--accent-phantom);
+    padding:4px 0 4px 18px; margin-block:20px;
+    font-style:italic; color:var(--ink-secondary); font-size:1.05em; max-width:58ch;
+  }
+
+  figure{ margin:18px 0 6px; }
+  figure svg{ width:100%; height:auto; display:block; }
+  figcaption{ font-size:13px; color:var(--muted); margin-top:6px; }
+
+  /* ---------- glossary ---------- */
+  .gloss{ display:flex; flex-direction:column; gap:0; }
+  .gloss-row{ display:grid; grid-template-columns:180px 1fr; gap:16px; padding-block:14px; border-top:1px solid var(--border); }
+  .gloss-row:first-child{ border-top:none; }
+  @media (max-width:560px){ .gloss-row{ grid-template-columns:1fr; gap:4px; } }
+  .gloss-term{ font-family:"Big Shoulders Display",sans-serif; font-weight:700; font-size:16px; text-transform:uppercase; letter-spacing:0.02em; color:var(--accent-real); }
+  .gloss-def{ font-size:0.95em; color:var(--ink-secondary); max-width:56ch; }
+
+  /* ---------- action plan ---------- */
+  .plan-group{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:20px 22px; margin-block:14px; box-shadow:var(--shadow);
+  }
+  .plan-group h3{ font-size:19px; text-transform:none; display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .plan-group h3 .who{
+    font-family:"Big Shoulders Display",sans-serif; text-transform:uppercase; font-weight:800;
+    font-size:12.5px; letter-spacing:0.06em; color:var(--accent-real);
+    background:var(--accent-real-fill); border:1px solid var(--accent-real);
+    padding:3px 9px; border-radius:20px;
+  }
+  .plan-group.pro h3 .who{ color:var(--accent-phantom); background:var(--accent-phantom-fill); border-color:var(--accent-phantom); }
+  .plan-group ul{ margin:0; padding-left:20px; }
+  .plan-group li{ margin-bottom:8px; font-size:0.96em; color:var(--ink-secondary); }
+  .plan-group li::marker{ color:var(--accent-real); }
+  .plan-group.pro li::marker{ color:var(--accent-phantom); }
+
+  footer{ padding-block:36px 60px; color:var(--muted); font-size:13.5px; }
+  footer a{ color:var(--muted); }
+  .tabular{ font-variant-numeric:tabular-nums; }
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">A plain-language guide</span>
+  <h1 style="font-size:clamp(34px,7vw,54px);">Is your country's<br>"real estate boom"<br>actually real?</h1>
+  <p class="lede">Governments count the rent homeowners would pay <em>themselves</em> as part of the
+  economy's real estate output — even though no one hands over a single coin. We pulled 20+ years
+  of official data for 43 countries to find out how much of "real estate growth" is that pretend
+  payment, and how much is people actually buying, selling, letting, and building.</p>
+  <div class="hero-stat">
+    <span class="num tabular">65</span>
+    <span class="cap">out of every <strong>100 dollars</strong> counted as "real estate output," in a typical country, is rent nobody actually paid.</span>
+  </div>
+</header>
+
+<section>
+  <h2 class="section-title">What is "pretend rent," really?</h2>
+  <p>If you own your home outright, you don't pay rent to anyone. But the people who compile a
+  country's economic statistics don't like that — it would make owners and renters look
+  incomparable. So they invent a number: <strong>what you would have paid yourself</strong> to
+  live in your own house, as if you were your own landlord. No cash moves. No tenant exists.
+  Nobody gets a payslip. But that invented number gets added to "real estate industry output,"
+  right alongside the money that actual estate agents, landlords, and property developers earn
+  for real work.</p>
+  <p>Economists call it <strong>imputed rent</strong>. Everyone else could just call it
+  <strong>phantom rent</strong> — it behaves like income on the national ledger, but it never
+  once changes hands.</p>
+
+  <div class="waffle-block">
+    <div class="waffle-grid" role="img" aria-label="65 out of 100 squares are phantom rent, 35 are real activity"><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="phantom"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i><i class="real"></i></div>
+    <div class="waffle-legend">
+      <div class="legend-row"><span class="swatch" style="background:var(--accent-phantom)"></span>
+        <div><b>65</b> <span class="lbl">phantom rent — nobody paid it</span></div></div>
+      <div class="legend-row"><span class="swatch" style="background:var(--accent-real)"></span>
+        <div><b>35</b> <span class="lbl">real work — agents, landlords, builders, buyers</span></div></div>
+      <p style="margin-top:6px;font-size:13px;color:var(--muted);max-width:34ch;">Median across 43 countries with reliable data, most recent year available for each.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">Why this should matter to you</h2>
+  <div class="card-grid">
+    <div class="aud-card">
+      <span class="tag">If you rent</span>
+      <p>"Real estate sector grew 8% this year" does <strong>not</strong> mean landlords built more
+      homes or rents got cheaper. Most of that number can be pure valuation. Watch the actual Rent
+      Price Index for your city, not the sector total, if you want to know what's coming for your rent.</p>
+    </div>
+    <div class="aud-card">
+      <span class="tag">If you own your home</span>
+      <p>Yes, the government pretends you pay yourself rent. It changes nothing about your mortgage,
+      your taxes, or your monthly budget. It only inflates how big the national economy looks on paper.</p>
+    </div>
+    <div class="aud-card">
+      <span class="tag">If you trade or manage property</span>
+      <p>Your real business is the "excluding phantom rent" slice, not the total. A rising sector
+      headline is <strong>not proof</strong> business is picking up for you — in Czechia, the real,
+      fee-earning side of the business actually shrank while the headline number climbed.</p>
+    </div>
+    <div class="aud-card">
+      <span class="tag">If you just read the news</span>
+      <p>Before believing "the property boom is powering the economy," ask: how much of that is
+      phantom rent? On the typical country's numbers, assume about two-thirds — until shown otherwise.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">What we actually found</h2>
+
+  <div class="finding">
+    <h3>1. It depends entirely on which country you live in</h3>
+    <p>We expected a simple story: phantom rent creeping up everywhere. It isn't. In <strong>Czechia</strong>,
+    it climbed from 61% of the real-estate total in 1990 to 70% in 2024. In the <strong>United
+    Kingdom</strong>, it went the opposite way — from 80% down to 73% — because British letting
+    agents, property managers, and developers grew their real business faster than the phantom-rent
+    number did.</p>
+    <figure>
+      <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart: Czechia's phantom-rent share rose from 61% to 70% between 1990 and 2024; the UK's fell from 80% to 73% between 1997 and 2023.">
+        <line x1="10" y1="193.3" x2="570" y2="193.3" stroke="var(--border)" stroke-width="1"/>
+        <line x1="10" y1="120.0" x2="570" y2="120.0" stroke="var(--border)" stroke-width="1"/>
+        <line x1="10" y1="46.7"  x2="570" y2="46.7"  stroke="var(--border)" stroke-width="1"/>
+        <text x="574" y="196.5" font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">60%</text>
+        <text x="574" y="123.2" font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">70%</text>
+        <text x="574" y="49.9"  font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">80%</text>
+        <text x="10" y="14" font-size="11" fill="var(--muted)" font-family="Literata,serif">1990</text>
+        <text x="504" y="14" font-size="11" fill="var(--muted)" font-family="Literata,serif" text-anchor="middle">2020</text>
+        <text x="570" y="14" font-size="11" fill="var(--muted)" font-family="Literata,serif" text-anchor="end">2024</text>
+
+        <polyline points="10.0,187.0 26.5,203.4 42.9,205.3 59.4,184.0 75.9,177.6 92.4,166.5 108.8,163.1 125.3,161.3 141.8,168.2 158.2,183.9 174.7,193.5 191.2,184.0 207.6,172.7 224.1,159.4 240.6,162.0 257.1,173.6 273.5,174.0 290.0,169.9 306.5,175.2 322.9,186.7 339.4,137.4 355.9,129.4 372.4,142.7 388.8,145.5 405.3,152.4 421.8,155.5 438.2,158.3 454.7,147.8 471.2,142.1 487.6,134.4 504.1,125.8 520.6,119.6 537.1,103.4 553.5,109.5 570.0,120.4"
+          fill="none" stroke="var(--accent-phantom)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="125.3,50.4 141.8,48.6 158.2,43.1 174.7,41.8 191.2,42.2 207.6,51.6 224.1,55.0 240.6,49.9 257.1,59.6 273.5,57.1 290.0,63.6 306.5,69.8 322.9,92.1 339.4,103.6 355.9,118.6 372.4,129.5 388.8,135.2 405.3,134.2 421.8,134.1 438.2,128.5 454.7,129.9 471.2,121.6 487.6,124.1 504.1,124.5 520.6,124.9 537.1,117.5 553.5,95.8"
+          fill="none" stroke="var(--accent-real)" stroke-width="2.5" stroke-dasharray="1,6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <circle cx="570.0" cy="120.4" r="3.5" fill="var(--accent-phantom)"/>
+        <text x="500" y="112" font-size="13" fill="var(--accent-phantom)" font-family="Big Shoulders Display,sans-serif" font-weight="700" text-anchor="end">Czechia: 70%</text>
+        <circle cx="553.5" cy="95.8" r="3.5" fill="var(--accent-real)"/>
+        <text x="500" y="88" font-size="13" fill="var(--accent-real)" font-family="Big Shoulders Display,sans-serif" font-weight="700" text-anchor="end">United Kingdom: 73%</text>
+      </svg>
+      <figcaption>Phantom rent as a share of the real-estate sector. Solid gold = Czechia (1990–2024). Dashed teal = UK (1997–2023). Source: OECD National Accounts.</figcaption>
+    </figure>
+  </div>
+
+  <div class="finding">
+    <h3>2. The sharpest finding: in Czechia, the "real" part is actually shrinking</h3>
+    <p>Strip out the effect of rising prices and look at genuine <em>activity</em> — actual deals
+    done, actual fees earned — and Czechia's non-phantom real estate business has been <strong>shrinking
+    for over 30 years</strong>, even as the headline sector total kept climbing. Almost all of the
+    reported "growth" is the phantom-rent valuation getting bigger on paper.</p>
+    <div class="stat-row">
+      <div class="mini-stat"><span class="v phantom tabular">+94%</span><span class="l">Phantom rent, real terms, 1990→2023</span></div>
+      <div class="mini-stat"><span class="v real tabular">-33%</span><span class="l">Real estate services, real terms, 1990→2023</span></div>
+    </div>
+    <figure>
+      <svg viewBox="0 0 580 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart: Czechia's phantom rent nearly doubled in real terms since 1990 while genuine real-estate services shrank by a third.">
+        <line x1="10" y1="230.0" x2="570" y2="230.0" stroke="var(--border)" stroke-width="1"/>
+        <line x1="10" y1="147.5" x2="570" y2="147.5" stroke="var(--border)" stroke-width="1"/>
+        <line x1="10" y1="78.8"  x2="570" y2="78.8"  stroke="var(--border)" stroke-width="1"/>
+        <line x1="10" y1="10.0"  x2="570" y2="10.0"  stroke="var(--border)" stroke-width="1"/>
+        <text x="574" y="233.2" font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">40</text>
+        <text x="574" y="150.7" font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">100 (1990 level)</text>
+        <text x="574" y="82.0"  font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">150</text>
+        <text x="574" y="13.2"  font-size="11" fill="var(--muted)" text-anchor="end" font-family="Literata,serif">200</text>
+        <text x="10" y="14" font-size="11" fill="var(--muted)" font-family="Literata,serif">1990</text>
+        <text x="349" y="14" font-size="11" fill="var(--muted)" font-family="Literata,serif" text-anchor="middle">2010</text>
+        <text x="570" y="14" font-size="11" fill="var(--muted)" font-family="Literata,serif" text-anchor="end">2023</text>
+
+        <polyline points="10.0,147.5 27.0,153.1 43.9,152.4 60.9,146.3 77.9,141.1 94.8,109.9 111.8,113.0 128.8,111.0 145.8,110.5 162.7,108.1 179.7,105.2 196.7,100.6 213.6,96.6 230.6,92.8 247.6,89.1 264.5,82.6 281.5,79.2 298.5,74.0 315.5,69.5 332.4,78.3 349.4,60.0 366.4,44.8 383.3,46.4 400.3,41.9 417.3,39.7 434.2,44.9 451.2,47.1 468.2,49.2 485.2,44.0 502.1,37.4 519.1,38.5 536.1,35.4 553.0,20.4 570.0,18.2"
+          fill="none" stroke="var(--accent-phantom)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="10.0,147.5 27.0,125.8 43.9,177.7 60.9,203.6 77.9,215.0 94.8,204.2 111.8,207.6 128.8,215.2 145.8,214.2 162.7,207.2 179.7,196.5 196.7,199.5 213.6,203.4 230.6,211.0 247.6,204.5 264.5,196.0 281.5,193.5 298.5,191.3 315.5,188.2 332.4,184.4 349.4,188.1 366.4,189.1 383.3,182.1 400.3,179.5 417.3,168.9 434.2,165.3 451.2,155.5 468.2,170.5 485.2,173.8 502.1,177.2 519.1,182.4 536.1,184.4 553.0,189.7 570.0,192.2"
+          fill="none" stroke="var(--accent-real)" stroke-width="2.5" stroke-dasharray="1,6" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <circle cx="570.0" cy="18.2" r="3.5" fill="var(--accent-phantom)"/>
+        <text x="500" y="12" font-size="13" fill="var(--accent-phantom)" font-family="Big Shoulders Display,sans-serif" font-weight="700" text-anchor="end">Phantom rent: 194</text>
+        <circle cx="570.0" cy="192.2" r="3.5" fill="var(--accent-real)"/>
+        <text x="500" y="207" font-size="13" fill="var(--accent-real)" font-family="Big Shoulders Display,sans-serif" font-weight="700" text-anchor="end">Real services: 67</text>
+      </svg>
+      <figcaption>Index, 1990 = 100, adjusted for price changes ("real"/volume terms). Solid gold = phantom rent. Dashed teal = real estate services excluding phantom rent. Czechia, OECD National Accounts.</figcaption>
+    </figure>
+    <p class="pullquote">Picture a market stall that both sells real vegetables and keeps a "display shelf
+    value" it writes down for produce it would theoretically sell to itself. In Czechia, actual
+    vegetable sales have quietly shrunk for three decades — every headline about "growth" is the
+    display-shelf number climbing, not more customers walking up to the stall.</p>
+  </div>
+
+  <div class="finding">
+    <h3>3. Numbers can jump overnight for reasons that have nothing to do with the economy</h3>
+    <p>In 2020, Slovakia's phantom-rent share leapt from <strong>0% to about 80%</strong> in a
+    single year. Did Slovak homeowners suddenly start valuing their houses eighty times higher?
+    No — the statistics office simply <em>started counting</em> something it had always ignored
+    before. Anyone glancing at the total "real estate" number that year would have seen what looks
+    exactly like a spectacular property boom. It was a filing-cabinet decision, not a market one.</p>
+    <p class="pullquote">It's like a school that never graded handwriting suddenly making it 80% of
+    the report card. The grade transforms overnight — the child's handwriting didn't.</p>
+  </div>
+
+  <div class="finding">
+    <h3>4. We even asked a computer to predict it. It couldn't.</h3>
+    <p>We fed a machine-learning model everything a reasonable person might guess would drive
+    next year's phantom-rent share: house prices, rent inflation, how fast the whole economy was
+    growing. Across three different modeling approaches — including a neural network, the same
+    family of technology behind modern AI — <strong>none of them beat simply guessing "no
+    change."</strong> That's a real result, not a failed experiment: it tells us that big swings in
+    this number come from paperwork decisions (like Slovakia's), not from anything the everyday
+    housing market is signaling in advance.</p>
+  </div>
+
+</section>
+
+<section>
+  <h2 class="section-title">Big words, plainly explained</h2>
+  <div class="gloss">
+    <div class="gloss-row"><div class="gloss-term">Imputed rent</div><div class="gloss-def">The "pretend rent" a homeowner is scored as paying themselves. No cash moves — it's an accounting entry, not a payment.</div></div>
+    <div class="gloss-row"><div class="gloss-term">Percentage point</div><div class="gloss-def">If a share moves from 60% to 65%, that's "5 percentage points," not "5%" (which would mean 60 → 63). News headlines often blur this — watch for it.</div></div>
+    <div class="gloss-row"><div class="gloss-term">Nominal vs. real</div><div class="gloss-def"><em>Nominal</em> = the raw dollar amount, prices included. <em>Real</em> = with rising prices stripped out, showing whether actual activity grew — like asking if a shop got more customers, not just higher prices.</div></div>
+    <div class="gloss-row"><div class="gloss-term">Median</div><div class="gloss-def">Line every country up from lowest to highest — the median is whoever's standing exactly in the middle. Harder for one extreme country to distort than a plain average.</div></div>
+    <div class="gloss-row"><div class="gloss-term">Correlation (r)</div><div class="gloss-def">A score from -1 to +1 for "do these two things move together?" We found r ≈ 0.30 between phantom-rent growth and real rents — a loose link, not a tight one.</div></div>
+    <div class="gloss-row"><div class="gloss-term">Statistically significant</div><div class="gloss-def">Roughly, "the odds this pattern is just random noise are low." It's the standard bar researchers use before calling a pattern real.</div></div>
+    <div class="gloss-row"><div class="gloss-term">Forecast band</div><div class="gloss-def">The shaded zone around a forecast line. It means: "our best guess is the middle — but don't hold us to the exact number; anywhere in the shading wouldn't surprise us."</div></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="section-title">What to actually do about it</h2>
+  <p style="margin-bottom:20px;">Pick the group that's you — each one gets specific, concrete moves,
+  not just "be skeptical."</p>
+
+  <div class="plan-group">
+    <h3><span class="who">Renters</span></h3>
+    <ul>
+      <li>A rosy "real estate sector grew" headline is not a signal that more rentals are coming or
+      that landlords are under pressure to lower rent — remember, ~65% of that growth can be phantom.</li>
+      <li>Track your city's actual Rent Price Index and vacancy rate for a real read on where your
+      rent is headed — not the national sector total.</li>
+    </ul>
+  </div>
+  <div class="plan-group">
+    <h3><span class="who">Homeowners</span></h3>
+    <ul>
+      <li>The phantom rent you're "scored" as paying yourself changes nothing about your mortgage,
+      your take-home pay, or your taxes in most countries — don't let a rising national number
+      make you feel richer or poorer than you actually are.</li>
+      <li>If you want to know if your area's real estate market is genuinely accelerating, look for
+      actual sale prices and transaction counts near you, not the blended national sector figure.</li>
+    </ul>
+  </div>
+  <div class="plan-group">
+    <h3><span class="who">Property traders &amp; small businesses</span></h3>
+    <ul>
+      <li>Your real exposure is the "excluding phantom rent" slice. When the sector headline rises,
+      check whether that's actually your segment (agents, lettings, management, development) or
+      just the valuation side — Czechia shows these can move in completely opposite directions.</li>
+      <li>Track house-price and transaction-volume indices directly — they track the real,
+      fee-earning side of the business noticeably better than the blended total does.</li>
+    </ul>
+  </div>
+  <div class="plan-group">
+    <h3><span class="who">Everyday citizens &amp; voters</span></h3>
+    <ul>
+      <li>Before accepting "the property boom is driving our economy" from a politician or headline,
+      ask: how much of that is phantom rent? Assume roughly two-thirds until shown otherwise.</li>
+      <li>A sudden one-year jump in real-estate figures is more often a bookkeeping change than a
+      sign a policy worked — don't let one year's number decide your vote on housing policy.</li>
+    </ul>
+  </div>
+
+  <div class="plan-group pro">
+    <h3><span class="who">Journalists &amp; analysts</span></h3>
+    <ul>
+      <li>Report "real estate sector growth" as two numbers, not one: the phantom-rent part and the
+      genuine-activity part. Only the second one means jobs, transactions, or market strength.</li>
+      <li>Before running a "real estate boom" story off one year's data jump, check whether a
+      country's statistics office changed methodology that year.</li>
+    </ul>
+  </div>
+  <div class="plan-group pro">
+    <h3><span class="who">Policymakers &amp; statistical offices</span></h3>
+    <ul>
+      <li>Publish the phantom/real split as standard practice, the way some European countries
+      already do — don't make analysts request it specially.</li>
+      <li>Flag benchmark revisions and methodology changes prominently in the same release as the
+      headline number, so a filing change is never mistaken for a market event.</li>
+    </ul>
+  </div>
+  <div class="plan-group pro">
+    <h3><span class="who">Investors</span></h3>
+    <ul>
+      <li>Don't treat a rising aggregate real-estate GDP figure as a signal of brokerage,
+      construction, or transaction-market strength on its own — check the non-phantom line, or
+      proxy it with house-price/transaction indices.</li>
+      <li>Our forecasting tests found next year's swing in the phantom share is close to
+      unpredictable from market data alone — don't build a trading thesis on calling its direction.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p>Built from OECD National Accounts (43 countries with a reliable imputed-rent breakdown,
+  spans from 2 to 35 years) and OECD Analytical House Price Indicators. Full statistical detail —
+  DuckDB queries, hypothesis tests, the machine-learning and forecasting models, and every chart
+  behind these numbers — lives in the companion technical notebook,
+  <em>Real_estate_vs_econonic_active.ipynb</em>. Figures here are rounded for readability; see the
+  notebook for exact values and confidence intervals.</p>
+</footer>
+
+</div>

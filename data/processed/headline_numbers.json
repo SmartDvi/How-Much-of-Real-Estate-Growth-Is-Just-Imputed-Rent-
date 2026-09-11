@@ -1,0 +1,70 @@
+{
+  "n_countries_reliable_panel": 43,
+  "cross_section_latest_year_stats": {
+    "count": 43.0,
+    "mean": 0.6482834824063448,
+    "std": 0.14900871460002668,
+    "min": 0.2875801646585756,
+    "10%": 0.45436360761999345,
+    "25%": 0.5408307448939526,
+    "50%": 0.6476304979460976,
+    "75%": 0.7653248238202925,
+    "90%": 0.845245993777373,
+    "max": 0.933889681548833
+  },
+  "n_trend_countries": 33,
+  "n_significant_rising": 8,
+  "hypothesis_test_early_vs_late": {
+    "n": 32,
+    "mean_early": 0.6589706238850944,
+    "mean_late": 0.6376107373023698,
+    "t_stat": -1.2117444739500522,
+    "t_p": 0.23476591048867865,
+    "wilcoxon_stat": 162.0,
+    "wilcoxon_p": 0.05696781584993005
+  },
+  "flagship_summary": [
+    {
+      "country": "CZE",
+      "start_year": 1990,
+      "end_year": 2024,
+      "imputed_share_start": 0.6085849933923939,
+      "imputed_share_end": 0.6994742819156303,
+      "imputed_share_change_pp": 9.08892885232364,
+      "re_total_cagr_nominal": 0.09530287064371978,
+      "imputed_cagr_nominal": 0.09979611731795557,
+      "excl_imputed_cagr_nominal": 0.08682358514545507,
+      "gdp_cagr_nominal": 0.0752421045065157,
+      "re_share_of_gdp_start": 0.06544999070995189,
+      "re_share_of_gdp_end": 0.1227044616665049
+    },
+    {
+      "country": "GBR",
+      "start_year": 1997,
+      "end_year": 2023,
+      "imputed_share_start": 0.7948560060629026,
+      "imputed_share_end": 0.7330452156413886,
+      "imputed_share_change_pp": -6.181079042151405,
+      "re_total_cagr_nominal": 0.039502115868149223,
+      "imputed_cagr_nominal": 0.03627055605885299,
+      "excl_imputed_cagr_nominal": 0.05008526931694557,
+      "gdp_cagr_nominal": 0.04152874242865989,
+      "re_share_of_gdp_start": 0.14609891941330683,
+      "re_share_of_gdp_end": 0.1388845955177205
+    },
+    {
+      "country": "USA",
+      "start_year": 1997,
+      "end_year": 2024,
+      "imputed_share_start": 0.5886085822850877,
+      "imputed_share_end": 0.5722075710145426,
+      "imputed_share_change_pp": -1.6401011270545163,
+      "re_total_cagr_nominal": 0.05215255929847129,
+      "imputed_cagr_nominal": 0.05105189780001895,
+      "excl_imputed_cagr_nominal": 0.0536770620285445,
+      "gdp_cagr_nominal": 0.04665597298830848,
+      "re_share_of_gdp_start": 0.11393279382799816,
+      "re_share_of_gdp_end": 0.1312403136922073
+    }
+  ]
+}

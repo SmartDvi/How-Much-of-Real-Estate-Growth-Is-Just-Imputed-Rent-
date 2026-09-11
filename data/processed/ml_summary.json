@@ -1,0 +1,49 @@
+{
+  "n_rows": 367,
+  "n_countries": 31,
+  "features": [
+    "imputed_share_lag1",
+    "HPI_yoy",
+    "RPI_yoy",
+    "HPI_YDH",
+    "gdp_growth",
+    "re_total_growth",
+    "years_since_start"
+  ],
+  "naive_cv_mae_mean": 0.01409733405061323,
+  "xgb_cv_mae_mean": 0.01479532666689339,
+  "xgb_cv_r2_mean": -0.07179944932422222,
+  "linear_cv_mae_mean": 0.014696624205154663,
+  "linear_cv_r2_mean": 0.0009289387894821477,
+  "xgb_skill_vs_naive_pct_mae_reduction": -4.951238395672397,
+  "shap_importance": [
+    {
+      "feature": "gdp_growth",
+      "mean_abs_shap": 0.0034507636446505785
+    },
+    {
+      "feature": "re_total_growth",
+      "mean_abs_shap": 0.0032882995437830687
+    },
+    {
+      "feature": "HPI_YDH",
+      "mean_abs_shap": 0.0025884932838380337
+    },
+    {
+      "feature": "imputed_share_lag1",
+      "mean_abs_shap": 0.002498992718756199
+    },
+    {
+      "feature": "RPI_yoy",
+      "mean_abs_shap": 0.0022411600220948458
+    },
+    {
+      "feature": "HPI_yoy",
+      "mean_abs_shap": 0.0017881612293422222
+    },
+    {
+      "feature": "years_since_start",
+      "mean_abs_shap": 0.0007247248431667686
+    }
+  ]
+}

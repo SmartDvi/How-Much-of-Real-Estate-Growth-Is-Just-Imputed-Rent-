@@ -1,0 +1,4 @@
+country,period,imputed_share_start_%,imputed_share_end_%,change_pp,RE_total_CAGR_%,imputed_CAGR_%,excl_imputed_CAGR_%,GDP_CAGR_%
+Czechia,1990-2024,60.86,69.95,9.09,9.53,9.98,8.68,7.52
+United Kingdom,1997-2023,79.49,73.3,-6.18,3.95,3.63,5.01,4.15
+United States,1997-2024,58.86,57.22,-1.64,5.22,5.11,5.37,4.67
